@@ -1,5 +1,4 @@
 const { User } = require("../models");
-
 class SessionController {
   async create(req, res) {
     return res.render("auth/signin");
@@ -11,17 +10,15 @@ class SessionController {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      req.send("Usuário não encontrado");
+      console.log("Usuário não encontrado");
       return res.redirect("/");
     }
 
     if (!(await user.checkPassword(password))) {
-      req.send("Senha incorreta");
+      console.log("Senha incorreta");
       return res.redirect("/");
     }
-
     req.session.user = user;
-
     return res.redirect("/app/dashboard");
   }
 }
